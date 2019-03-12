@@ -1,10 +1,10 @@
 import React from 'react';
-import Home from './src/screens/Home.js';
+import TabController from './src/tabs/TabController.js';
 
 export default class App extends React.Component {
   render() {
     return (
-      <Home />
+      <TabController />
     );
   }
 }
