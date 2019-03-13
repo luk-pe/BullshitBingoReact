@@ -8,6 +8,16 @@ import * as Actions from '../redux/actions';
 
 class Browse extends React.Component {
 
+    componentDidMount() {
+        this._fetchData();
+    }
+
+    _fetchData() {
+        this.props.getAllRemoteTemplates().then(() => {
+            console.log(this.props.templates);
+        });
+    }
+
     render() {
         var Template = [
 
