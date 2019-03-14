@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
-
+import { StyleSheet, Text, View, FlatList, Button,} from 'react-native';
+import Game from './Game';
 // Redux import
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -41,6 +41,10 @@ class Browse extends React.Component {
 
                 }}
             />
+                <Button
+                    title="Start a Game"
+                    onPress={() => this.props.navigation.navigate('Game')}
+                />
             </View>
         );
     }
