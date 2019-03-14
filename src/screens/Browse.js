@@ -14,7 +14,7 @@ class Browse extends React.Component {
 
     _fetchData() {
         this.props.getAllRemoteTemplates().then(() => {
-            console.log(this.props.templates);
+            // TODO loading screen / circle
         });
     }
 
@@ -25,22 +25,19 @@ class Browse extends React.Component {
 
     ]
         return (
-            <View style={styles.Container}>
-            <FlatList
-                data={Template}
-                renderItem={({item}) => {
-
-                    return(
-
-                        <View style={styles.Template}>
-                        <Text style={styles.TemplateName}>{item.name}</Text>
-                        <Text style={styles.TemplateCreator}>{item.creator}</Text>
-                        </View>
-
-                    );
-
-                }}
-            />
+            <View style={styles.container}>
+                <FlatList
+                    data={this.props.templates}
+                    keyExtractor={(item) => item.id}
+                    renderItem={({item}) => {
+                        return (
+                            <View style={styles.template}>
+                                <Text style={styles.templateName}>{item.name}</Text>
+                                <Text style={styles.templateCreator}>{item.creator}</Text>
+                            </View>
+                        );
+                    }}
+                />
                 <Button
                     title="Start a Game"
                     onPress={() => this.props.navigation.navigate('Game')}
@@ -51,25 +48,25 @@ class Browse extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    Container:{
-        backgroundColor: '#EDEDED',
-        flex: 1,
-    },
-    Template: {
-        flex: 1,
-        backgroundColor: 'white',
-        alignItems: 'flex-start',
-        marginHorizontal: 4,
-        marginVertical: 2,
-        padding: 5,
-    },
-    TemplateName: {
-        fontSize: 18,
-    },
-    TemplateCreator: {
-        fontSize: 12,
+        container: {
+            backgroundColor: '#EDEDED',
+            flex: 1,
+        },
+        template: {
+            flex: 1,
+            backgroundColor: 'white',
+            alignItems: 'flex-start',
+            marginHorizontal: 4,
+            marginVertical: 2,
+            padding: 5,
+        },
+        templateName: {
+            fontSize: 18,
+        },
+        templateCreator: {
+            fontSize: 12,
+        }
     }
-}
 );
 
 function mapDispatchToProps(dispatch) {
