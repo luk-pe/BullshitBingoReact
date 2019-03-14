@@ -19,11 +19,6 @@ class Browse extends React.Component {
     }
 
     render() {
-        var Template = [
-
-            {name:"T1",creator:"ALALA"},{name:"T2",creator:"Bla"}
-
-    ]
         return (
             <View style={styles.container}>
                 <FlatList
