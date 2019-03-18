@@ -34,7 +34,6 @@ class Search extends React.Component {
 
             return itemData.indexOf(textData) > -1;
         });
-
         this.setState({
             data: newData,
             textValue: text
