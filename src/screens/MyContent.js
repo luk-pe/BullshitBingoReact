@@ -1,11 +1,27 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {SegmentedControlIOS, StyleSheet, Text, View} from 'react-native';
 
 export default class MyContent extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+        selectedIndex: 'Templates',
+    };
+    }
+
+
     render() {
         return (
-            <View style={styles.container}>
-                <Text>Hier kommt my Content :-)</Text>
+            <View style={styles.header}>
+            <SegmentedControlIOS
+                values={['Templates', 'Games']}
+                selectedIndex={this.state.selectedIndex}
+                onChange={(event) => {
+                    this.setState({selectedIndex: event.nativeEvent.selectedSegmentIndex});
+                    }
+                }
+
+            />
             </View>
         );
     }
@@ -18,4 +34,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    header: {
+        padding: 10,
+    }
 });
