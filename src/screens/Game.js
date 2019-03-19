@@ -1,67 +1,106 @@
 import React from 'react';
-import {StyleSheet, View, Text} from "react-native";
+import {StyleSheet, View, Text, TouchableOpacity} from "react-native";
 import {connect} from "react-redux";
 
 class Game extends React.Component {
+
+    onPress = () => {
+        console.log('onPress')
+    }
+    
 
     render() {
         return (
             <View style={styles.Container}>
                 <View style={styles.Row}>
-                    <View style={styles.Box}>
+                        <TouchableOpacity
+                            style={styles.Box}
+                            onPress={this.onPress}
+                        >
+                            <Text>Item</Text>
+                        </TouchableOpacity>
+
+                    <TouchableOpacity
+                            style={styles.Box}
+                            onPress={this.onPress}>
                         <Text>Item</Text>
-                    </View>
-                    <View style={styles.Box}>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                            style={styles.Box}
+                            onPress={this.onPress}>
                         <Text>Item</Text>
-                    </View>
-                    <View style={styles.Box}>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                            style={styles.Box}
+                            onPress={this.onPress}>
                         <Text>Item</Text>
-                    </View>
-                    <View style={styles.Box}>
-                        <Text>Item</Text>
-                    </View>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.Row}>
-                    <View style={styles.Box}>
+                    <TouchableOpacity
+                            style={styles.Box}
+                            onPress={this.onPress}>
                         <Text>Item</Text>
-                    </View>
-                    <View style={styles.Box}>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                            style={styles.Box}
+                            onPress={this.onPress}>
                         <Text>Item</Text>
-                    </View>
-                    <View style={styles.Box}>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                            style={styles.Box}
+                            onPress={this.onPress}>
                         <Text>Item</Text>
-                    </View>
-                    <View style={styles.Box}>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                            style={styles.Box}
+                            onPress={this.onPress}>
                         <Text>Item</Text>
-                    </View>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.Row}>
-                    <View style={styles.Box}>
+                    <TouchableOpacity
+                            style={styles.Box}
+                            onPress={this.onPress}>
                         <Text>Item</Text>
-                    </View>
-                    <View style={styles.Box}>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                            style={styles.Box}
+                            onPress={this.onPress}>
                         <Text>Item</Text>
-                    </View>
-                    <View style={styles.Box}>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                            style={styles.Box}
+                            onPress={this.onPress}>
                         <Text>Item</Text>
-                    </View>
-                    <View style={styles.Box}>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                            style={styles.Box}
+                            onPress={this.onPress}>
                         <Text>Item</Text>
-                    </View>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.Row}>
-                    <View style={styles.Box}>
+                    <TouchableOpacity
+                            style={styles.Box}
+                            onPress={this.onPress}>
                         <Text>Item</Text>
-                    </View>
-                    <View style={styles.Box}>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                            style={styles.Box}
+                            onPress={this.onPress}>
                         <Text>Item</Text>
-                    </View>
-                    <View style={styles.Box}>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                            style={styles.Box}
+                            onPress={this.onPress}>
                         <Text>Item</Text>
-                    </View>
-                    <View style={styles.Box}>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                            style={styles.Box}
+                            onPress={this.onPress}>
                         <Text>Item</Text>
-                    </View>
+                    </TouchableOpacity>
                 </View>
             </View>
         );
