@@ -66,7 +66,8 @@ const styles = StyleSheet.create({
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        getAllRemoteTemplates: Actions.getAllRemoteTemplates
+        getAllRemoteTemplates: Actions.getAllRemoteTemplates,
+        addTemplate: Actions.addTemplate
     }, dispatch);
 }
 

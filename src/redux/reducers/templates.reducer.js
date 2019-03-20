@@ -1,4 +1,6 @@
 import * as Actions from '../actions';
+import storage from 'redux-persist/lib/storage';
+import { persistReducer } from 'redux-persist';
 
 const initialState = {
     remoteTemplates: [],
@@ -34,4 +36,9 @@ const templatesReducer = function (state = initialState, action) {
     }
 };
 
-export default templatesReducer;
+const persistConfig = {
+    key: 'templates',
+    storage: storage,
+};
+
+export default persistReducer(persistConfig, templatesReducer);

@@ -1,14 +1,25 @@
 import React from 'react';
 
 import {Provider} from 'react-redux';
-import {createStore, applyMiddleware} from 'redux';
+import {createStore, applyMiddleware,compose} from 'redux';
 import thunk from 'redux-thunk';
+import {persistStore,persistReducer} from 'redux-persist'
+import AsyncStorage from 'redux-persist/lib/storage' // defaults to localStorage for web and AsyncStorage for react-native
+import {PersistGate} from 'redux-persist/integration/react';
 import reducers from './src/redux/reducers';
 
 import TabController from './src/tabs/TabController.js';
 
-const store = createStore(reducers,applyMiddleware(thunk));
+import MyContent from './src/screens/NewTemplate';
 
+const persistConfig = {
+    key: 'root',
+    storage: AsyncStorage
+};
+
+const persistedReducer = persistReducer(persistConfig, reducers);
+const store = createStore(persistedReducer, {}, compose(applyMiddleware(thunk)));
+const persistor = persistStore(store);
 
 import * as firebase from 'firebase';
 
@@ -28,7 +39,9 @@ export default class App extends React.Component {
     render() {
         return (
             <Provider store={store}>
-                <TabController/>
+                <PersistGate loading={<MyContent />} persistor={persistor}>
+                    <TabController/>
+                </PersistGate>
             </Provider>
         );
     }
