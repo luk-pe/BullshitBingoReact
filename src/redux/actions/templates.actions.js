@@ -3,6 +3,14 @@ import 'firebase/firestore';
 
 export const GET_ALL_TEMPLATES = 'GET_ALL_TEMPLATES';
 export const GET_ALL_REMOTE_TEMPLATES = 'GET_ALL_REMOTE_TEMPLATES';
+export const ADD_NEW_TEMPLATE = 'ADD_NEW_TEMPLATE';
+
+export function addNewTemplate(template) {
+    return {
+        type: ADD_NEW_TEMPLATE,
+        payload: [template]
+    }
+}
 
 export function getAllTemplates() {
     return {

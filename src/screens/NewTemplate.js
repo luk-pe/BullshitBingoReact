@@ -1,11 +1,15 @@
 import React from 'react';
 import {StyleSheet, TextInput, Text, View, Button, ScrollView, Alert} from 'react-native';
+import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
+import * as Actions from "../redux/actions";
+import Template from './Template';
 
 class NewTemplate extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            template: '',
+            title: '',
             items: []
         };
     }
@@ -18,8 +22,8 @@ class NewTemplate extends React.Component {
                     <Text style={styles.text}>Templates</Text>
                     <TextInput
                         style={styles.input}
-                        onChangeText={(text) => this.setState({template: text})}
-                        value={this.state.template}
+                        onChangeText={(text) => this.setState({title: text})}
+                        value={this.state.title}
                         placeholder={'Templates'}
                         placeholderTextColor={'#A9A9A9'}
                     />
@@ -151,18 +155,16 @@ class NewTemplate extends React.Component {
         let temp = this.state.items;
         temp[position] = text;
         this.setState({items: temp});
-        console.log(this.state);
     };
     onSave = () => {
         let emptyFields = false;
-        if(this.state.template == null){
+        if(this.state.title == null){
             emptyFields = true;
         } else if (this.state.items.length < 16){
             emptyFields = true;
         } else {
-            // TODO: trim to catch fields with blank space
             for (i = 0; i < 16; i++){
-                if(this.state.items[i] == null || this.state.items[i] == ''){
+                if(this.state.items[i] == null || this.state.items[i].trim() == ''){
                     emptyFields = true;
                 }
             }
@@ -181,6 +183,9 @@ class NewTemplate extends React.Component {
                 ],
                 {cancelable: false},
             );
+        } else {
+            this.props.addNewTemplate(this.state);
+            this.props.navigation.navigate('Template', {template: this.state})
         }
     };
 }
@@ -209,5 +214,14 @@ const styles = StyleSheet.create({
         }
     }
 );
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+        addNewTemplate: Actions.addNewTemplate
+    }, dispatch);
+}
 
-export default NewTemplate;
+function mapStateToProps() {
+    return {
+    };
+}
+export default connect(mapStateToProps, mapDispatchToProps)(NewTemplate);

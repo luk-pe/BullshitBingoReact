@@ -7,6 +7,13 @@ const initialState = {
 
 const templatesReducer = function (state = initialState, action) {
     switch (action.type) {
+
+        case Actions.ADD_NEW_TEMPLATE: {
+            return {
+                ...state,
+                templates: [...state.templates, ...action.payload]
+            };
+        }
         case Actions.GET_ALL_TEMPLATES: {
             return {
                 ...state,
