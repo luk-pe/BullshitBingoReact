@@ -1,8 +1,48 @@
 import React from 'react';
 import {StyleSheet, View, Text, Button} from "react-native";
 import Game from './Game';
+import {generateUUID} from "../utils/UUIDGenerator";
+
+// Redux import
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import * as Actions from '../redux/actions';
+
 class Template extends React.Component {
 
+    _shuffle = (a) => {
+        for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+    };
+
+    _onClickStartGame = () => {
+
+        // Create new game and navigte to game
+        const template = this.props.navigation.state.params.template;
+        let gameItems = [];
+
+        template.items.forEach((item) => {
+            gameItems.push({
+                name: item,
+                checked: false
+            });
+        });
+
+        this._shuffle(gameItems);
+
+        let game = {
+            id: generateUUID(),
+            started_at: new Date(),
+            name: template.name,
+            items: gameItems
+        };
+
+        this.props.addGame(game);
+        this.props.navigation.navigate('Game', {game: game});
+    };
 
     render() {
         const template = this.props.navigation.state.params.template;
@@ -67,7 +107,7 @@ class Template extends React.Component {
                 </View>
                 <Button
                     title="Start a Game"
-                    onPress={() => this.props.navigation.navigate('Game', {template: template})}
+                    onPress={() => this._onClickStartGame()}
                 />
             </View>
 
@@ -101,4 +141,14 @@ const styles = StyleSheet.create({
 });
 
 
-export default Template;
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+        addGame: Actions.addGame
+    }, dispatch);
+}
+
+function mapStateToProps(state) {
+    return {};
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Template);

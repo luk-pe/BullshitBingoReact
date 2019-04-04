@@ -7,6 +7,7 @@ import {persistStore,persistReducer} from 'redux-persist'
 import AsyncStorage from 'redux-persist/lib/storage' // defaults to localStorage for web and AsyncStorage for react-native
 import {PersistGate} from 'redux-persist/integration/react';
 import reducers from './src/redux/reducers';
+import * as firebase from 'firebase';
 
 import TabController from './src/tabs/TabController.js';
 
@@ -21,7 +22,9 @@ const persistedReducer = persistReducer(persistConfig, reducers);
 const store = createStore(persistedReducer, {}, compose(applyMiddleware(thunk)));
 const persistor = persistStore(store);
 
-import * as firebase from 'firebase';
+// TODO Für Debugging
+// Folgende Zeile auskommentieren um PersistStore zu löschen -> Gesamter Speicher wird geleert
+// persistor.purge();
 
 // Initialize Firebase
 var firebaseConfig = {
@@ -34,6 +37,9 @@ var firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
+
+// TODO wieder löschen
+AsyncStorage.clear();
 
 export default class App extends React.Component {
     render() {

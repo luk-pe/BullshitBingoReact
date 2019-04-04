@@ -3,6 +3,7 @@ import {StyleSheet, TextInput, Text, View, Button, ScrollView, Alert} from 'reac
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import * as Actions from "../redux/actions";
+
 import Template from './Template';
 
 class NewTemplate extends React.Component {

@@ -3,23 +3,21 @@ import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';
 
 const initialState = {
-    remoteTemplates: [],
-    templates: []
+    games: []
 };
 
-const templatesReducer = function (state = initialState, action) {
+const gamesReducer = function (state = initialState, action) {
     switch (action.type) {
-
-        case Actions.ADD_NEW_TEMPLATE: {
+        case Actions.ADD_GAME: {
             return {
                 ...state,
-                templates: [...state.templates, action.payload]
+                games: [...state.games, action.payload]
             };
         }
-        case Actions.GET_ALL_REMOTE_TEMPLATES: {
+        case Actions.SAVE_GAME: {
             return {
                 ...state,
-                remoteTemplates: [...action.payload]
+                games: state.games.map(game => game.id === action.payload.id ? action.payload : game),
             };
         }
         default: {
@@ -31,8 +29,8 @@ const templatesReducer = function (state = initialState, action) {
 };
 
 const persistConfig = {
-    key: 'templates',
+    key: 'games',
     storage: storage,
 };
 
-export default persistReducer(persistConfig, templatesReducer);
+export default persistReducer(persistConfig, gamesReducer);

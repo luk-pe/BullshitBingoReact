@@ -1,6 +1,10 @@
 import React from 'react';
 import {StyleSheet, View, Text, TouchableOpacity, Button} from "react-native";
+import {generateUUID} from "../utils/UUIDGenerator";
+
 import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
+import * as Actions from "../redux/actions";
 
 class Game extends React.Component {
     constructor(props) {
@@ -9,6 +13,12 @@ class Game extends React.Component {
             game: null
         };
     }
+
+    componentDidMount() {
+        const game = this.props.navigation.state.params.game;
+        this.setState({game: game});
+    }
+
     onPress = (position) => {
         let checked = this.state.game.items[position].checked;
         checked = !checked;
@@ -18,24 +28,10 @@ class Game extends React.Component {
         if(this.isBingo()){
             console.log('Bingo');
         };
+
+        this.props.saveGame(this.state.game);
     }
-    componentDidMount() {
-        const template = this.props.navigation.state.params.template;
-        let gameItems = [];
-        template.items.forEach((item) => {
-            gameItems.push({
-                name: item,
-                checked: false
-            });
-        });
-        // TODO: only shuffle if this is a new Game
-    shuffle(gameItems);
-        let Game = {
-            name: template.title,
-            items: gameItems
-        }
-        this.setState({game: Game})
-    }
+
     isBingo(){
         //vertical
         for (i = 0; i < 4; i++){
@@ -224,4 +220,14 @@ const styles = StyleSheet.create({
 });
 
 
-export default Game;
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+        saveGame: Actions.saveGame
+    }, dispatch);
+}
+
+function mapStateToProps() {
+    return {
+    };
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Game);
