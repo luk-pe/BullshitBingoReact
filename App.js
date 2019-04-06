@@ -10,8 +10,7 @@ import reducers from './src/redux/reducers';
 import * as firebase from 'firebase';
 
 import TabController from './src/tabs/TabController.js';
-
-import MyContent from './src/screens/NewTemplate';
+import Login from './src/screens/Login.js';
 
 const persistConfig = {
     key: 'root',
@@ -38,15 +37,12 @@ var firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-// TODO wieder löschen
-AsyncStorage.clear();
-
 export default class App extends React.Component {
     render() {
         return (
             <Provider store={store}>
-                <PersistGate loading={<MyContent />} persistor={persistor}>
-                    <TabController/>
+                <PersistGate loading={null} persistor={persistor}>
+                    <Login/>
                 </PersistGate>
             </Provider>
         );
