@@ -9,8 +9,7 @@ import {PersistGate} from 'redux-persist/integration/react';
 import reducers from './src/redux/reducers';
 import * as firebase from 'firebase';
 
-import TabController from './src/tabs/TabController.js';
-import Login from './src/screens/Login.js';
+import SplashScreen from './src/screens/SplashScreen.js';
 
 const persistConfig = {
     key: 'root',
@@ -41,8 +40,8 @@ export default class App extends React.Component {
     render() {
         return (
             <Provider store={store}>
-                <PersistGate loading={null} persistor={persistor}>
-                    <Login/>
+                <PersistGate loading={<SplashScreen/>} persistor={persistor}>
+                    <SplashScreen/>
                 </PersistGate>
             </Provider>
         );

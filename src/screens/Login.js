@@ -11,6 +11,36 @@ import * as Actions from '../redux/actions';
 // https://firebase.google.com/docs/auth/web/start?authuser=1
 
 class Login extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            mail: "",
+            password: ""
+        }
+    }
+
+    _onChangeMail = (text) => {
+        this.setState({mail: text});
+    };
+
+    _onChangePassword = (text) => {
+        this.setState({password: text});
+    }
+
+    _tryLogin = () => {
+        const {mail,password} = this.state;
+        console.log("Try Login for User: " + mail + " with password " + password);
+        this.props.loginUser(mail,password).catch((error) => {
+
+            var errorCode = error.code;
+            var errorMessage = error.message;
+
+            console.log(error);
+            console.log(errorCode);
+            console.log(errorMessage);
+        });
+    };
 
     render() {
         return (
@@ -24,7 +54,7 @@ class Login extends React.Component {
                                selectionColor="white"
                                autoCapitalize="none"
                                autoCorrection="none"
-                               onChangeText={null}
+                               onChangeText={this._onChangeMail}
                     />
                     <TextInput style={styles.textInput}
                                autoCorrect={false}
@@ -35,12 +65,12 @@ class Login extends React.Component {
                                autoCapitalize="none"
                                autoCorrection="none"
                                secureTextEntry = {true}
-                               onChangeText={null}
+                               onChangeText={this._onChangePassword}
                     />
                 </View>
                 <View style={styles.viewBottom}>
                     <TouchableOpacity style = {styles.loginButton}
-                                      onPress = {() => null}>
+                                      onPress = {() => this._tryLogin()}>
                         <Text style = {styles.loginButtonText}>Anmelden</Text>
                     </TouchableOpacity>
                 </View>
@@ -98,6 +128,7 @@ const styles = StyleSheet.create({
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
+        loginUser: Actions.loginUser
     }, dispatch);
 }
 
