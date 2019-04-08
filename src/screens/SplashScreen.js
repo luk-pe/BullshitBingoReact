@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet,Text,View} from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as Actions from '../redux/actions';
@@ -8,13 +8,30 @@ import Login from './Login.js';
 import TabController from './../tabs/TabController.js';
 
 class SplashScreen extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            isLoading: true
+        }
+    }
 
     componentDidMount() {
-        console.log(this.props.user);
+        this.props.checkUserStatus().finally(() => {
+            this.setState({isLoading:false});
+        })
     }
 
     render() {
-        if (this.props.user) {
+        if (this.state.isLoading) {
+            return (
+                <View style={styles.container}>
+                    <Text>Logging in</Text>
+                    <Text>Please wait...</Text>
+                </View>
+            );
+        }
+        if (!this.state.isLoading && this.props.user) {
             return (<TabController/>);
         } else {
             return (<Login/>);
@@ -33,6 +50,7 @@ const styles = StyleSheet.create({
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
+        checkUserStatus: Actions.checkUserStatus,
         loginUser: Actions.loginUser
     }, dispatch);
 }

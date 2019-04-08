@@ -15,6 +15,7 @@ class Login extends React.Component {
         super(props);
 
         this.state = {
+            isLoading: false,
             mail: "",
             password: ""
         }
@@ -29,16 +30,11 @@ class Login extends React.Component {
     }
 
     _tryLogin = () => {
+        this.setState({isLoading: true});
         const {mail,password} = this.state;
-        console.log("Try Login for User: " + mail + " with password " + password);
         this.props.loginUser(mail,password).catch((error) => {
-
-            var errorCode = error.code;
-            var errorMessage = error.message;
-
-            console.log(error);
-            console.log(errorCode);
-            console.log(errorMessage);
+            alert(error.message);
+            this.setState({isLoading: false});
         });
     };
 
@@ -59,7 +55,7 @@ class Login extends React.Component {
                     <TextInput style={styles.textInput}
                                autoCorrect={false}
                                underlineColorAndroid="transparent"
-                               placeholder="Passwort"
+                               placeholder="Password"
                                placeholderTextColor="white"
                                selectionColor="white"
                                autoCapitalize="none"
@@ -69,9 +65,11 @@ class Login extends React.Component {
                     />
                 </View>
                 <View style={styles.viewBottom}>
-                    <TouchableOpacity style = {styles.loginButton}
-                                      onPress = {() => this._tryLogin()}>
-                        <Text style = {styles.loginButtonText}>Anmelden</Text>
+                    <TouchableOpacity
+                        disabled={this.state.isLoading}
+                        style = {styles.loginButton}
+                        onPress = {() => this._tryLogin()}>
+                        <Text style = {styles.loginButtonText}>Login</Text>
                     </TouchableOpacity>
                 </View>
             </View>
