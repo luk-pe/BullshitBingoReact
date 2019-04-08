@@ -27,6 +27,19 @@ export function logoutUser() {
     };
 }
 
+export function createUser(email,password) {
+    return (dispatch) => {
+        const auth = firebase.auth();
+        return auth.createUserWithEmailAndPassword(email, password)
+            .then(() => {
+                dispatch({
+                    type: SET_USER,
+                    payload: firebase.auth().currentUser
+                });
+            });
+    };
+}
+
 export function updateUsername(name) {
     return (dispatch) => {
         const user = firebase.auth().currentUser;
@@ -47,8 +60,6 @@ export function checkUserStatus() {
             firebase.auth().onAuthStateChanged(function (user) {
                 resolve();
                 if (user) {
-                    console.log("USER LOGGED IN....");
-                    console.log(user);
                     dispatch({
                         type: SET_USER,
                         payload: user
