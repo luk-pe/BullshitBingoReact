@@ -34,7 +34,7 @@ class MyContent extends React.Component {
                 }
                 {
                     this.state.selectedIndex === 1 &&
-                    <MyGames/>
+                    <MyGames navigation={this.props.navigation}/>
                 }
             </View>
         );

@@ -8,6 +8,11 @@ import {connect} from 'react-redux';
 import * as Actions from '../redux/actions';
 
 class MyGames extends React.Component {
+
+    componentDidMount() {
+        console.log(this.props)
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -18,7 +23,7 @@ class MyGames extends React.Component {
                         return (
                             <TouchableOpacity
                                               style={styles.game}
-                                              onPress ={() => this.props.navigation.navigate('Template', {template: item})}
+                                              onPress ={() => this.props.navigation.navigate('Game', {game: item})}
                             >
                                 <Text style={styles.gameName}>{item.name}</Text>
                                 <Text style={styles.gameDate}>Gestartet: {moment(item.started_at).format("DD.MM.YYYY HH:mm")} Uhr</Text>
