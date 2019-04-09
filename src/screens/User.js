@@ -5,7 +5,7 @@ import {
     Text,
     View,
     Image,
-    TouchableOpacity
+    TouchableOpacity, FlatList
 } from 'react-native';
 import AntIcon from "react-native-vector-icons/AntDesign";
 import DialogInput from 'react-native-dialog-input';
@@ -13,13 +13,29 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as Actions from '../redux/actions';
 
+import * as firebase from 'firebase';
+import 'firebase/auth';
+
 class User extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            isAddSubscriberAlertOpen: false,
             isEditUsernameAlertOpen: false
-        }
+        };
+    }
+
+    componentDidMount() {
+        this.props.getSubscribesTo();
+    }
+
+    _addSubscriber = (mail) => {
+        this.props.subscribeToUser(mail).then(() => {
+            this.setState({isAddSubscriberAlertOpen:false})
+        }).catch((errorMessage) => {
+            alert(errorMessage);
+        });
     }
 
     _editUsername = (name) => {
@@ -75,11 +91,23 @@ class User extends Component {
                 </View>
 
                 <View style={styles.body}>
-                    <View style={styles.item}>
-                        <View style={styles.infoContent}>
-                            <Text style={styles.info}>LOGOUT</Text>
-                        </View>
+                    <View style={styles.listHeader}>
+                        <Text>I subscribe to</Text>
+                        <TouchableOpacity onPress={() => this.setState({isAddSubscriberAlertOpen: true})}>
+                            <Text style={{color:'blue',fontSize:25}}>+</Text>
+                        </TouchableOpacity>
                     </View>
+                    <FlatList
+                        data={this.props.subscribes_to}
+                        keyExtractor={(item) => item.email}
+                        renderItem={({item}) => {
+                            return (
+                                <View style={styles.userRow}>
+                                    <Text style={styles.templateName}>{item.email}</Text>
+                                </View>
+                            );
+                        }}
+                    />
                 </View>
                 <DialogInput isDialogVisible={this.state.isEditUsernameAlertOpen}
                              title={"Edit Username"}
@@ -92,14 +120,29 @@ class User extends Component {
                                  this.setState({isEditUsernameAlertOpen: false})
                              }}>
                 </DialogInput>
+                <DialogInput isDialogVisible={this.state.isAddSubscriberAlertOpen}
+                             title={"Subscribe"}
+                             message={"Please enter the mail address of the friend you want to subscribe to!"}
+                             hintInput={"yourfriend@mail.com"}
+                             submitInput={(inputText) => {
+                                 this._addSubscriber(inputText)
+                             }}
+                             closeDialog={() => {
+                                 this.setState({isAddSubscriberAlertOpen: false})
+                             }}>
+                </DialogInput>
             </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
     header: {
-        backgroundColor: "#DCDCDC",
+        backgroundColor: "#fff",
+        flex: 0.4
     },
     headerContent: {
         padding: 30,
@@ -108,7 +151,7 @@ const styles = StyleSheet.create({
     actionBar: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 10
+        marginTop: 20
     },
     avatar: {
         width: 130,
@@ -129,9 +172,8 @@ const styles = StyleSheet.create({
         fontWeight: '600',
     },
     body: {
-        backgroundColor: "#fff",
-        height: 500,
-        alignItems: 'center',
+        backgroundColor: '#EDEDED',
+        flex: 0.6
     },
     item: {
         flexDirection: 'row',
@@ -145,18 +187,40 @@ const styles = StyleSheet.create({
         fontSize: 18,
         marginTop: 20,
         color: "#000",
+    },
+    listHeader: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        margin:10
+    },
+    userRow: {
+        flex: 1,
+        backgroundColor: 'white',
+        alignItems: 'flex-start',
+        margin: 5,
+        padding: 10,
+    },
+    templateName: {
+        fontSize: 18,
+    },
+    templateCreator: {
+        fontSize: 12,
     }
 });
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
+        getSubscribesTo: Actions.getSubscribesTo,
         logoutUser: Actions.logoutUser,
-        updateUsername: Actions.updateUsername
+        updateUsername: Actions.updateUsername,
+        subscribeToUser: Actions.subscribeToUser
     }, dispatch);
 }
 
 function mapStateToProps(state) {
     return {
+        subscribes_to: state.userReducer.subscribes_to,
         user: state.userReducer.user
     };
 }
