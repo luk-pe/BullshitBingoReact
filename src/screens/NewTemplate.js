@@ -11,7 +11,8 @@ class NewTemplate extends React.Component {
         super(props);
         this.state = {
             name: '',
-            items: []
+            items: [],
+            private: true
         };
     }
 

@@ -8,6 +8,7 @@ import Icon from "react-native-vector-icons/FontAwesome"
 import TabBrowse from './TabBrowse';
 import TabMyContent from './TabMyContent';
 import TabSearch from './TabSearch';
+import TabUser from './TabUser';
 
 const TabController = createBottomTabNavigator({
     TabBrowse: {
@@ -29,6 +30,13 @@ const TabController = createBottomTabNavigator({
         navigationOptions: {
             tabBarIcon: ({ tintColor }) => <Icon name={"search"} size={18} color={tintColor} />,
             title: "Search"
+        }
+    },
+    TabUser: {
+        screen: TabUser,
+        navigationOptions: {
+            tabBarIcon: ({ tintColor }) => <Icon name={"user"} size={18} color={tintColor} />,
+            title: "User"
         }
     }
 });
