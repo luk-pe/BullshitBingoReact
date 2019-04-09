@@ -13,7 +13,7 @@ class MyTemplates extends React.Component {
             <View style={styles.container}>
                 <FlatList
                     data={this.props.templates}
-                    keyExtractor={(item) => item.name}
+                    keyExtractor={(item) => item.id}
                     renderItem={({item}) => {
                         return (
                             <TouchableOpacity

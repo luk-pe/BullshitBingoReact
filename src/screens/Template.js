@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, Text, Button} from "react-native";
+import {StyleSheet, View, Text, Button, Alert} from "react-native";
 import Game from './Game';
 import {generateUUID} from "../utils/UUIDGenerator";
 
@@ -19,12 +19,29 @@ class Template extends React.Component {
     };
 
     _onClickMakePublic = () => {
-        this.props.uploadTemplate(this.props.navigation.state.params.template).then(() => {
-            alert("Your template is now available online!");
-        })
-            .catch(() => {
-                alert("Something went wrong while uploading your template...");
-            });
+        Alert.alert(
+            'Upload template',
+            'Do you really want to upload your template?',
+            [
+                {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                },
+                {
+                    text: 'OK', onPress: () => {
+                        this.props.uploadTemplate(this.props.navigation.state.params.template).then(() => {
+                            alert("Your template is now available online!");
+                            this.props.navigation.goBack();
+                        })
+                            .catch(() => {
+                                alert("Something went wrong while uploading your template...");
+                            });
+                    }
+                },
+            ],
+            {cancelable: false},
+        );
     };
 
     _onClickStartGame = () => {
@@ -120,11 +137,15 @@ class Template extends React.Component {
                     onPress={() => this._onClickStartGame()}
                 />
                 {
-                    !template.downloaded &&
+                    template.private &&
                     <Button
                         title="Make available online"
                         onPress={() => this._onClickMakePublic()}
                     />
+                }
+                {
+                    !template.private &&
+                        <Text style={{alignSelf:'center'}}>Template is available online!</Text>
                 }
             </View>
 
