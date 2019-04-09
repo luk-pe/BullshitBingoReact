@@ -46,6 +46,7 @@ class Template extends React.Component {
 
     render() {
         const template = this.props.navigation.state.params.template;
+        console.log(template);
         return (
             <View style={styles.Container}>
                 <View style={styles.Row}>

@@ -13,14 +13,14 @@ class MyTemplates extends React.Component {
             <View style={styles.container}>
                 <FlatList
                     data={this.props.templates}
-                    keyExtractor={(item) => item.title}
+                    keyExtractor={(item) => item.name}
                     renderItem={({item}) => {
                         return (
                             <TouchableOpacity
                                               style={styles.template}
                                               onPress ={() => this.props.navigation.navigate('Template', {template: item})}
                             >
-                                <Text style={styles.templateName}>{item.title}</Text>
+                                <Text style={styles.templateName}>{item.name}</Text>
                                 <Text style={styles.templateCreator}>{item.title}</Text>
                             </TouchableOpacity>
                         );

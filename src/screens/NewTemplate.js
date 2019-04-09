@@ -10,7 +10,7 @@ class NewTemplate extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            title: '',
+            name: '',
             items: []
         };
     }
@@ -23,7 +23,7 @@ class NewTemplate extends React.Component {
                     <Text style={styles.text}>Templates</Text>
                     <TextInput
                         style={styles.input}
-                        onChangeText={(text) => this.setState({title: text})}
+                        onChangeText={(text) => this.setState({name: text})}
                         value={this.state.title}
                         placeholder={'Templates'}
                         placeholderTextColor={'#A9A9A9'}
@@ -159,7 +159,7 @@ class NewTemplate extends React.Component {
     };
     onSave = () => {
         let emptyFields = false;
-        if(this.state.title == null){
+        if(this.state.name == null){
             emptyFields = true;
         } else if (this.state.items.length < 16){
             emptyFields = true;
