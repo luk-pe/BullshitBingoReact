@@ -26,6 +26,15 @@ export function getAllTemplates() {
     }
 }
 
+export function uploadTemplate(template) {
+    return (dispatch) => {
+        console.log(template);
+        let dbOject = {
+
+        };
+    };
+}
+
 export function getAllRemoteTemplates() {
     return (dispatch) => {
         var db = firebase.firestore();

@@ -18,6 +18,15 @@ class Template extends React.Component {
         return a;
     };
 
+    _onClickMakePublic = () => {
+        this.props.uploadTemplate(this.props.navigation.state.params.template).then(() => {
+            alert("Your template is now available online!");
+        })
+            .catch(() => {
+                alert("Something went wrong while uploading your template...");
+            });
+    };
+
     _onClickStartGame = () => {
 
         // Create new game and navigte to game
@@ -109,6 +118,13 @@ class Template extends React.Component {
                     title="Start a Game"
                     onPress={() => this._onClickStartGame()}
                 />
+                {
+                    !template.downloaded &&
+                    <Button
+                        title="Make available online"
+                        onPress={() => this._onClickMakePublic()}
+                    />
+                }
             </View>
 
 
@@ -143,7 +159,8 @@ const styles = StyleSheet.create({
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        addGame: Actions.addGame
+        addGame: Actions.addGame,
+        uploadTemplate: Actions.uploadTemplate
     }, dispatch);
 }
 
