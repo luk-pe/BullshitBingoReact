@@ -30,7 +30,7 @@ class MyContent extends React.Component {
                 </View>
                 {
                     this.state.selectedIndex === 0 &&
-                    <MyTemplates/>
+                    <MyTemplates navigation={this.props.navigation}/>
                 }
                 {
                     this.state.selectedIndex === 1 &&
