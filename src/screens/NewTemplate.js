@@ -11,7 +11,8 @@ class NewTemplate extends React.Component {
         super(props);
         this.state = {
             name: '',
-            items: []
+            items: [],
+            description: ''
         };
     }
 
@@ -143,6 +144,17 @@ class NewTemplate extends React.Component {
                         placeholder={'Item 16'}
                         placeholderTextColor={'#A9A9A9'}
                     />
+                </View>
+                <View style={styles.content}>
+                    <Text style={styles.text}>Description</Text>
+                    <TextInput
+                        style={styles.input}
+                        multiline = {true}
+                        onChangeText={(text) => this.setState({description: text})}
+                        value={this.state.description}
+                        placeholder={'Description (optional)'}
+                        placeholderTextColor={'#A9A9A9'}
+                        />
                     <Button
                         title="Save Template"
                         onPress={() => this.onSave()}

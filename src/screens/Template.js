@@ -2,6 +2,8 @@ import React from 'react';
 import {StyleSheet, View, Text, Button} from "react-native";
 import Game from './Game';
 import {generateUUID} from "../utils/UUIDGenerator";
+import DialogInput from 'react-native-dialog-input';
+
 
 // Redux import
 import {bindActionCreators} from 'redux';
@@ -9,7 +11,12 @@ import {connect} from 'react-redux';
 import * as Actions from '../redux/actions';
 
 class Template extends React.Component {
-
+    constructor(props) {
+        super(props);
+        this.state = {
+            isDialogVisible: false
+        };
+    }
     _shuffle = (a) => {
         for (let i = a.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -37,18 +44,41 @@ class Template extends React.Component {
             id: generateUUID(),
             started_at: new Date(),
             name: template.name,
-            items: gameItems
+            items: gameItems,
+            description: template.description
         };
 
         this.props.addGame(game);
         this.props.navigation.navigate('Game', {game: game});
     };
 
+    _onClickEditDescription = () => {
+        this.setState({isDialogVisible: true});
+    };
+
     render() {
-        const template = this.props.navigation.state.params.template;
+        let template = this.props.navigation.state.params.template;
         console.log(template);
         return (
             <View style={styles.Container}>
+                <View style={styles.Description}>
+                    <Text >{template.description}</Text>
+                    <Button
+                        title="Change Description"
+                        onPress={() => this._onClickEditDescription()}
+                    />
+                    <DialogInput isDialogVisible={this.state.isDialogVisible}
+                                 title={"Change Description"}
+                                 message={"Edit the description and press Submit"}
+                                 initValueTextInput={template.description}
+                                 submitInput={ (inputText) => {
+                                     template.description = inputText;
+                                     this.setState({isDialogVisible: false})
+                                 }}
+
+                                 closeDialog={ () => {this.setState({isDialogVisible: false})}}>
+                    </DialogInput>
+                </View>
                 <View style={styles.Row}>
                     <View style={styles.Box}>
                         <Text>{template.items[0]}</Text>
@@ -113,6 +143,7 @@ class Template extends React.Component {
             </View>
 
 
+
         );
     }
 }
@@ -137,9 +168,11 @@ const styles = StyleSheet.create({
         aspectRatio: 1,
         alignItems: 'center',
         justifyContent: 'center',
-
+    },
+    Description: {
+        justifyContent: 'flex-start',
     }
-});
+    });
 
 
 function mapDispatchToProps(dispatch) {

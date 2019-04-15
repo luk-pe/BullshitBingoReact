@@ -8,6 +8,7 @@ import {connect} from 'react-redux';
 import * as Actions from '../redux/actions';
 
 class MyTemplates extends React.Component {
+    // TODO: Add Creator in state to display correctly in Flatlist item
     render() {
         return (
             <View style={styles.container}>
@@ -21,7 +22,7 @@ class MyTemplates extends React.Component {
                                               onPress ={() => this.props.navigation.navigate('Template', {template: item})}
                             >
                                 <Text style={styles.templateName}>{item.name}</Text>
-                                <Text style={styles.templateCreator}>{item.title}</Text>
+                                <Text style={styles.templateCreator}>{item.creator}</Text>
                             </TouchableOpacity>
                         );
                     }}

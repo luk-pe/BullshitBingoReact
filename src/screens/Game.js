@@ -60,6 +60,9 @@ class Game extends React.Component {
         if (this.state.game) {
             return (
                 <View style={styles.Container}>
+                    <View style={styles.Description}>
+                        <Text >{this.state.game.description}</Text>
+                    </View>
                     <View style={styles.Row}>
                         <TouchableOpacity
                             style={this.state.game.items[0].checked ? styles.CheckedBox : styles.Box}
@@ -215,6 +218,9 @@ const styles = StyleSheet.create({
         aspectRatio: 1,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    Description: {
+        justifyContent: 'flex-start',
     }
 
 });
