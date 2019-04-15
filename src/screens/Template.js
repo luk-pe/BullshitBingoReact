@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, Text, Button} from "react-native";
+import {StyleSheet, View, Text, Button, Alert} from "react-native";
 import Game from './Game';
 import {generateUUID} from "../utils/UUIDGenerator";
 import DialogInput from 'react-native-dialog-input';
@@ -23,6 +23,32 @@ class Template extends React.Component {
             [a[i], a[j]] = [a[j], a[i]];
         }
         return a;
+    };
+
+    _onClickMakePublic = () => {
+        Alert.alert(
+            'Upload template',
+            'Do you really want to upload your template?',
+            [
+                {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                },
+                {
+                    text: 'OK', onPress: () => {
+                        this.props.uploadTemplate(this.props.navigation.state.params.template).then(() => {
+                            alert("Your template is now available online!");
+                            this.props.navigation.goBack();
+                        })
+                            .catch(() => {
+                                alert("Something went wrong while uploading your template...");
+                            });
+                    }
+                },
+            ],
+            {cancelable: false},
+        );
     };
 
     _onClickStartGame = () => {
@@ -140,6 +166,17 @@ class Template extends React.Component {
                     title="Start a Game"
                     onPress={() => this._onClickStartGame()}
                 />
+                {
+                    template.private &&
+                    <Button
+                        title="Make available online"
+                        onPress={() => this._onClickMakePublic()}
+                    />
+                }
+                {
+                    !template.private &&
+                        <Text style={{alignSelf:'center'}}>Template is available online!</Text>
+                }
             </View>
 
 
@@ -177,7 +214,8 @@ const styles = StyleSheet.create({
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        addGame: Actions.addGame
+        addGame: Actions.addGame,
+        uploadTemplate: Actions.uploadTemplate
     }, dispatch);
 }
 
