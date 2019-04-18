@@ -29,7 +29,7 @@ class Search extends React.Component {
     }
     searchFilterFunction = (text) => {
         const newData = this.props.templates.filter(item => {
-            const itemData = `${item.name.toUpperCase()}  ${item.creator.toUpperCase()}`;
+            const itemData = `${item.name.toUpperCase()}`;
             const textData = text.toUpperCase();
 
             return itemData.indexOf(textData) > -1;
