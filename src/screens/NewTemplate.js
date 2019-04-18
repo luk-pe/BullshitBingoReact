@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, TextInput, Text, View, Button, ScrollView, Alert} from 'react-native';
+import {KeyboardAvoidingView,StyleSheet, TextInput, Text, View, Button, ScrollView, Alert} from 'react-native';
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import * as Actions from "../redux/actions";
@@ -19,7 +19,7 @@ class NewTemplate extends React.Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <KeyboardAvoidingView style={styles.container} behavior="padding" keyboardVerticalOffset={80} enabled>
                 <ScrollView>
                 <View style={styles.content}>
                     <Text style={styles.text}>Templates</Text>
@@ -162,7 +162,7 @@ class NewTemplate extends React.Component {
                     />
                 </View>
                 </ScrollView>
-            </View>
+            </KeyboardAvoidingView>
         );
     }
     onChange = (text, position) => {
