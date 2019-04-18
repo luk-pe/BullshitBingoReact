@@ -1,6 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, Text, TouchableOpacity, Button} from "react-native";
-import {generateUUID} from "../utils/UUIDGenerator";
+import {Share, StyleSheet, View, Text, TouchableOpacity, Button} from "react-native";
 
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
@@ -18,6 +17,28 @@ class Game extends React.Component {
         const game = this.props.navigation.state.params.game;
         this.setState({game: game});
     }
+
+    _callBingo = () => {
+        try {
+            const game = this.props.navigation.state.params.game;
+            const result = Share.share({
+                message:
+                    'I CALL BINGO!!! Looks like I won the "' + game.name + '" game!',
+            });
+
+            if (result.action === Share.sharedAction) {
+                if (result.activityType) {
+                    // shared with activity type of result.activityType
+                } else {
+                    // shared
+                }
+            } else if (result.action === Share.dismissedAction) {
+                // dismissed
+            }
+        } catch (error) {
+            alert(error.message);
+        }
+    };
 
     onPress = (position) => {
         let checked = this.state.game.items[position].checked;
@@ -172,8 +193,7 @@ class Game extends React.Component {
                         this.isBingo() &&
                         <Button
                             title="Call Bingo"
-
-                            //onPress={() => this.props.navigation.navigate('Game', {template: template})}
+                            onPress={() => this._callBingo()}
                         />
                     }
                 </View>
