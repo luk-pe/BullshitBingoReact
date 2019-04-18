@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList, Button,} from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity,} from 'react-native';
 import {SearchBar } from 'react-native-elements';
 
 import Game from './Game';
@@ -61,10 +61,12 @@ class Search extends React.Component {
                     keyExtractor={(item) => item.id}
                     renderItem={({item}) => {
                         return (
-                            <View style={styles.template}>
+                            <TouchableOpacity style={styles.template}
+                                              onPress ={() => this.props.navigation.navigate('Template', {template: item})}
+                            >
                                 <Text style={styles.templateName}>{item.name}</Text>
                                 <Text style={styles.templateCreator}>{item.creator}</Text>
-                            </View>
+                            </TouchableOpacity>
                         );
                     }}
                     ListHeaderComponent={this.renderHeader}
