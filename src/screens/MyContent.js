@@ -1,5 +1,6 @@
 import React from 'react';
-import {SegmentedControlIOS, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
+import SegmentedControlTab from "react-native-segmented-control-tab";
 
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
@@ -20,11 +21,11 @@ class MyContent extends React.Component {
         return (
             <View style={styles.container}>
                 <View style={styles.header}>
-                    <SegmentedControlIOS
+                    <SegmentedControlTab
                         values={['Templates', 'Games']}
                         selectedIndex={this.state.selectedIndex}
-                        onChange={(event) => {
-                            this.setState({selectedIndex: event.nativeEvent.selectedSegmentIndex});
+                        onTabPress={(index) => {
+                            this.setState({selectedIndex: index});
                         }}
                     />
                 </View>
