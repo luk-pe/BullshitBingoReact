@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList, Button, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, FlatList, RefreshControl, TouchableOpacity} from 'react-native';
 import Game from './Game';
 import Template from './Template';
 // Redux import
@@ -8,14 +8,22 @@ import {connect} from 'react-redux';
 import * as Actions from '../redux/actions';
 
 class Browse extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state =  {
+            isLoading: false
+        }
+    }
 
     componentDidMount() {
         this._fetchData();
     }
 
     _fetchData() {
-        this.props.getAllRemoteTemplates().then(() => {
-            // TODO loading screen / circle
+        this.setState({isLoading: true});
+        this.props.getAllRemoteTemplates().finally(() => {
+            this.setState({isLoading: false});
         });
     }
 
@@ -23,6 +31,12 @@ class Browse extends React.Component {
         return (
             <View style={styles.container}>
                 <FlatList
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={this.state.isLoading}
+                            onRefresh={() => this._fetchData()}
+                        />
+                    }
                     data={this.props.templates}
                     keyExtractor={(item) => item.id}
                     renderItem={({item}) => {

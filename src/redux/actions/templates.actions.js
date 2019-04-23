@@ -33,9 +33,9 @@ export function uploadTemplate(template) {
         const user = firebase.auth().currentUser;
         let dbOject = {
             created: new Date(),
-            creator: user.displayName,
+            creator: template.creator,
             creator_id: user.uid,
-            description: "", // TODO Add Description Field
+            description: template.description,
             downloaded: 0,
             name: template.name,
             items: template.items
