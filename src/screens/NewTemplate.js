@@ -13,6 +13,7 @@ class NewTemplate extends React.Component {
             name: '',
             items: [],
             description: '',
+            creator: this.props.user.displayName || this.props.user.email,
             private: true
         };
     }
@@ -234,8 +235,9 @@ function mapDispatchToProps(dispatch) {
     }, dispatch);
 }
 
-function mapStateToProps() {
+function mapStateToProps(state) {
     return {
+        user: state.userReducer.user
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(NewTemplate);
