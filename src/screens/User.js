@@ -51,7 +51,7 @@ class User extends Component {
     _logoutUser = () => {
         Alert.alert(
             'Logout',
-            'Do you really want to log out?',
+            'Do you really want to log out? Your local games will be deleted!',
             [
                 {
                     text: 'Cancel',

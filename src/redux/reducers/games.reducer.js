@@ -20,6 +20,11 @@ const gamesReducer = function (state = initialState, action) {
                 games: state.games.map(game => game.id === action.payload.id ? action.payload : game),
             };
         }
+        case Actions.LOGOUT_USER: {
+            return {
+                state: initialState
+            };
+        }
         default: {
             return {
                 ...state

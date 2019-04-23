@@ -28,6 +28,11 @@ const templatesReducer = function (state = initialState, action) {
                 remoteTemplates: [...action.payload]
             };
         }
+        case Actions.LOGOUT_USER: {
+            return {
+                state: initialState
+            };
+        }
         default: {
             return {
                 ...state
