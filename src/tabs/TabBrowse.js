@@ -38,15 +38,15 @@ const TabBrowse = createStackNavigator({
     },
     Game: {
         screen: Game,
-        navigationOptions: navOpts(navOpts, "Game", ''),
+        navigationOptions: navOpts(navOpts, "Game"),
     },
     Template: {
         screen: Template,
-        navigationOptions: navOpts(navOpts, "Template", ''),
+        navigationOptions: navOpts(navOpts, "Template"),
     },
     NewTemplate: {
         screen: NewTemplate,
-        navigationOptions: navOpts(navOpts, "NewTemplate", ''),
+        navigationOptions: navOpts(navOpts, "NewTemplate"),
     }
 
 });
