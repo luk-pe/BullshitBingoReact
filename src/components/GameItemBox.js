@@ -10,7 +10,7 @@ class GameItemBox extends React.Component {
                 style={item.checked ? styles.CheckedBox : styles.Box}
                 onPress={onPress}
             >
-                <Text>{item.name}</Text>
+                <Text>{item.name || item}</Text>
             </TouchableOpacity>
         );
     }

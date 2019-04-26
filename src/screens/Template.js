@@ -9,6 +9,7 @@ import DialogInput from 'react-native-dialog-input';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as Actions from '../redux/actions';
+import GameItemBox from "../components/GameItemBox";
 
 class Template extends React.Component {
     constructor(props) {
@@ -17,6 +18,7 @@ class Template extends React.Component {
             isDialogVisible: false
         };
     }
+
     _shuffle = (a) => {
         for (let i = a.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -52,8 +54,6 @@ class Template extends React.Component {
     };
 
     _onClickStartGame = () => {
-
-        // Create new game and navigte to game
         const template = this.props.navigation.state.params.template;
         let gameItems = [];
 
@@ -82,13 +82,38 @@ class Template extends React.Component {
         this.setState({isDialogVisible: true});
     };
 
+    _renderRow(rowNumber) {
+        const items = this.props.navigation.state.params.template.items;
+        let boxes = [];
+        for (let i = 0; i < 4; i++) {
+            const index = i + (4 * rowNumber);
+            boxes.push(
+                <GameItemBox key={index} item={items[index]} onPress={null}/>
+            );
+        }
+
+        return (
+            <View key={rowNumber} style={styles.Row}>
+                {boxes}
+            </View>
+        );
+    }
+
+    _renderRows() {
+        let rows = [];
+        for (let i = 0; i < 4; i++) {
+            rows.push(this._renderRow(i));
+        }
+
+        return (rows);
+    }
+
     render() {
         let template = this.props.navigation.state.params.template;
-        console.log(template);
         return (
             <View style={styles.Container}>
                 <View style={styles.Description}>
-                    <Text >{template.description}</Text>
+                    <Text>{template.description}</Text>
                     <Button
                         title="Change Description"
                         onPress={() => this._onClickEditDescription()}
@@ -97,71 +122,17 @@ class Template extends React.Component {
                                  title={"Change Description"}
                                  message={"Edit the description and press Submit"}
                                  initValueTextInput={template.description}
-                                 submitInput={ (inputText) => {
+                                 submitInput={(inputText) => {
                                      template.description = inputText;
                                      this.setState({isDialogVisible: false})
                                  }}
 
-                                 closeDialog={ () => {this.setState({isDialogVisible: false})}}>
+                                 closeDialog={() => {
+                                     this.setState({isDialogVisible: false})
+                                 }}>
                     </DialogInput>
                 </View>
-                <View style={styles.Row}>
-                    <View style={styles.Box}>
-                        <Text>{template.items[0]}</Text>
-                    </View>
-
-                    <View style={styles.Box}>
-                        <Text>{template.items[1]}</Text>
-                    </View>
-                    <View style={styles.Box}>
-                        <Text>{template.items[2]}</Text>
-                    </View>
-                    <View style={styles.Box}>
-                        <Text>{template.items[3]}</Text>
-                    </View>
-                </View>
-                <View style={styles.Row}>
-                    <View style={styles.Box}>
-                        <Text>{template.items[4]}</Text>
-                    </View>
-                    <View style={styles.Box}>
-                        <Text>{template.items[5]}</Text>
-                    </View>
-                    <View style={styles.Box}>
-                        <Text>{template.items[6]}</Text>
-                    </View>
-                    <View style={styles.Box}>
-                        <Text>{template.items[7]}</Text>
-                    </View>
-                </View>
-                <View style={styles.Row}>
-                    <View style={styles.Box}>
-                        <Text>{template.items[8]}</Text>
-                    </View>
-                    <View style={styles.Box}>
-                        <Text>{template.items[9]}</Text>
-                    </View>
-                    <View style={styles.Box}>
-                        <Text>{template.items[10]}</Text>
-                    </View>
-                    <View style={styles.Box}>
-                        <Text>{template.items[11]}</Text>
-                    </View>
-                </View>
-                <View style={styles.Row}>
-                    <View style={styles.Box}>
-                        <Text>{template.items[12]}</Text>
-                    </View>
-                    <View style={styles.Box}>
-                        <Text>{template.items[13]}</Text>
-                    </View>
-                    <View style={styles.Box}>
-                        <Text>{template.items[14]}</Text>
-                    </View>
-                    <View style={styles.Box}>
-                        <Text>{template.items[15]}</Text>
-                    </View>
-                </View>
+                {this._renderRows()}
                 <Button
                     title="Start a Game"
                     onPress={() => this._onClickStartGame()}
@@ -175,10 +146,9 @@ class Template extends React.Component {
                 }
                 {
                     !template.private &&
-                        <Text style={{alignSelf:'center'}}>Template is available online!</Text>
+                    <Text style={{alignSelf: 'center'}}>Template is available online!</Text>
                 }
             </View>
-
 
 
         );
@@ -209,7 +179,7 @@ const styles = StyleSheet.create({
     Description: {
         justifyContent: 'flex-start',
     }
-    });
+});
 
 
 function mapDispatchToProps(dispatch) {
