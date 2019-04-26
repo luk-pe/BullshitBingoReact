@@ -3,7 +3,6 @@ import 'firebase/auth';
 import 'firebase/firestore';
 import {generateUUID} from "../../utils/UUIDGenerator";
 
-export const GET_ALL_TEMPLATES = 'GET_ALL_TEMPLATES';
 export const GET_ALL_REMOTE_TEMPLATES = 'GET_ALL_REMOTE_TEMPLATES';
 export const UPLOAD_TEMPLATE = 'UPLOAD_TEMPLATE';
 export const ADD_NEW_TEMPLATE = 'ADD_NEW_TEMPLATE';
@@ -18,13 +17,6 @@ export function addNewTemplate(template) {
     return {
         type: ADD_NEW_TEMPLATE,
         payload: newTemplate
-    }
-}
-
-export function getAllTemplates() {
-    return {
-        type: GET_ALL_TEMPLATES,
-        payload: []
     }
 }
 

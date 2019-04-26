@@ -112,12 +112,12 @@ export function getSubscribesTo() {
 }
 
 export function subscribeToUser(email) {
-    // Check if exists
     return (dispatch) => {
         return new Promise((resolve, reject) => {
             const db = firebase.firestore();
             const query = db.collection("users").where("email", "==", email).limit(1);
             return query.get().then(function (querySnapshot) {
+                // If user exists
                 if (querySnapshot.size === 1) {
                     let user = {};
                     querySnapshot.forEach(doc => {
