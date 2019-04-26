@@ -44,7 +44,7 @@ class NewTemplate extends React.Component {
             );
         } else {
             this.props.addNewTemplate(this.state);
-            this.props.navigation.navigate('Template', {template: this.state})
+            this.props.navigation.navigate('MyTemplate', {template: this.state})
         }
     };
 

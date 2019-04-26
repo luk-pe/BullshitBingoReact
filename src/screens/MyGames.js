@@ -7,11 +7,6 @@ import {connect} from 'react-redux';
 import * as Actions from '../redux/actions';
 
 class MyGames extends React.Component {
-
-    componentDidMount() {
-        console.log(this.props)
-    }
-
     render() {
         return (
             <View style={styles.container}>
