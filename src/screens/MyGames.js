@@ -1,7 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList, Button, TouchableOpacity} from 'react-native';
-import moment from 'moment';
-import Template from './Template';
+import {StyleSheet, View, FlatList} from 'react-native';
+import GameCell from "../components/GameCell";
 // Redux import
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -21,13 +20,7 @@ class MyGames extends React.Component {
                     keyExtractor={(item) => item.id}
                     renderItem={({item}) => {
                         return (
-                            <TouchableOpacity
-                                              style={styles.game}
-                                              onPress ={() => this.props.navigation.navigate('Game', {game: item})}
-                            >
-                                <Text style={styles.gameName}>{item.name}</Text>
-                                <Text style={styles.gameDate}>Gestartet: {moment(item.started_at).format("DD.MM.YYYY HH:mm")} Uhr</Text>
-                            </TouchableOpacity>
+                            <GameCell item={item} onPress={() => this.props.navigation.navigate('Game', {game: item})}/>
                         );
                     }}
                 />
@@ -39,28 +32,13 @@ class MyGames extends React.Component {
 const styles = StyleSheet.create({
         container: {
             backgroundColor: '#EDEDED',
-            flex: 1,
-        },
-        game: {
-            flex: 1,
-            backgroundColor: 'white',
-            alignItems: 'flex-start',
-            marginHorizontal: 4,
-            marginVertical: 2,
-            padding: 5,
-        },
-        gameName: {
-            fontSize: 18,
-        },
-        gameDate: {
-            fontSize: 12,
+            flex: 1
         }
     }
 );
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({
-    }, dispatch);
+    return bindActionCreators({}, dispatch);
 }
 
 function mapStateToProps(state) {
