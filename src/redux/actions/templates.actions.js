@@ -49,7 +49,7 @@ export function uploadTemplate(template) {
 export function getAllRemoteTemplates() {
     return (dispatch) => {
         var db = firebase.firestore();
-        return db.collection("templates").get().then(function (querySnapshot) {
+        return db.collection("templates").orderBy('downloaded','desc').get().then(function (querySnapshot) {
             let data = [];
             querySnapshot.forEach(function (doc) {
                 let d ={
