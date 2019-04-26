@@ -71,7 +71,7 @@ class Search extends React.Component {
                     renderItem={({item}) => {
                         return (
                             <TemplateCell item={item}
-                                          onPress={() => this.props.navigation.navigate('Template', {template: item})}/>
+                                          onPress={() => this.props.navigation.navigate('SearchTemplate', {template: item})}/>
                         );
                     }}
                     ListHeaderComponent={this._renderHeader}
