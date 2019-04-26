@@ -22,7 +22,7 @@ const gamesReducer = function (state = initialState, action) {
         }
         case Actions.LOGOUT_USER: {
             return {
-                state: initialState
+                ...initialState
             };
         }
         default: {
