@@ -41,7 +41,7 @@ class Template extends React.Component {
                     text: 'OK', onPress: () => {
                         this.props.uploadTemplate(this.props.navigation.state.params.template).then(() => {
                             alert("Your template is now available online!");
-                            this.props.navigation.goBack();
+                            this.props.navigation.navigate('MyContent');
                         })
                             .catch(() => {
                                 alert("Something went wrong while uploading your template...");

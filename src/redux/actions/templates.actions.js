@@ -1,7 +1,6 @@
 import * as firebase from 'firebase';
 import 'firebase/auth';
 import 'firebase/firestore';
-import {generateUUID} from "../../utils/UUIDGenerator";
 
 export const GET_ALL_REMOTE_TEMPLATES = 'GET_ALL_REMOTE_TEMPLATES';
 export const UPLOAD_TEMPLATE = 'UPLOAD_TEMPLATE';
@@ -9,14 +8,9 @@ export const ADD_NEW_TEMPLATE = 'ADD_NEW_TEMPLATE';
 
 export function addNewTemplate(template) {
 
-    let newTemplate = {
-        ...template,
-        id: generateUUID()
-    };
-
     return {
         type: ADD_NEW_TEMPLATE,
-        payload: newTemplate
+        payload: template
     }
 }
 
@@ -37,10 +31,10 @@ export function uploadTemplate(template) {
         return db.collection("templates").add({
             ...dbOject
         }).then(() => {
-
+            const tmp = {...template, private:false};
             dispatch({
                 type: UPLOAD_TEMPLATE,
-                payload: {...template, private:false}
+                payload: tmp
             });
         });
     };

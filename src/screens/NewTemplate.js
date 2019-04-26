@@ -3,13 +3,13 @@ import {KeyboardAvoidingView, StyleSheet, TextInput, Text, View, Button, ScrollV
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import * as Actions from "../redux/actions";
-
-import Template from './Template';
+import {generateUUID} from "../utils/UUIDGenerator";
 
 class NewTemplate extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: generateUUID(),
             name: '',
             items: [],
             description: '',
