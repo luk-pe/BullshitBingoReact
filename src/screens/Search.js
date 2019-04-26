@@ -1,8 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList, TouchableOpacity,} from 'react-native';
-import {SearchBar } from 'react-native-elements';
+import {StyleSheet, View, FlatList, RefreshControl,} from 'react-native';
+import {SearchBar} from 'react-native-elements';
+import TemplateCell from "../components/TemplateCell";
 
-import Game from './Game';
 // Redux import
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -12,8 +12,9 @@ class Search extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            isLoading: false,
             textValue: "",
-            data:null
+            data: null
         }
     }
 
@@ -22,12 +23,14 @@ class Search extends React.Component {
     }
 
     _fetchData() {
+        this.setState({isLoading: true});
         this.props.getAllRemoteTemplates().then(() => {
             // TODO loading screen / circle
             this.setState({data: this.props.templates});
-        });
+        }).finally(() => this.setState({isLoading: false}));
     }
-    searchFilterFunction = (text) => {
+
+    _searchFilterFunction = (text) => {
         const newData = this.props.templates.filter(item => {
             const itemData = `${item.name.toUpperCase()}`;
             const textData = text.toUpperCase();
@@ -40,13 +43,13 @@ class Search extends React.Component {
         });
     };
 
-    renderHeader = () => {
+    _renderHeader = () => {
         return (
             <SearchBar
                 placeholder="Type Here..."
                 platform={'ios'}
                 round
-                onChangeText={text => this.searchFilterFunction(text)}
+                onChangeText={text => this._searchFilterFunction(text)}
                 autoCorrect={false}
                 value={null}
             />
@@ -57,19 +60,21 @@ class Search extends React.Component {
         return (
             <View style={styles.container}>
                 <FlatList
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={this.state.isLoading}
+                            onRefresh={() => this._fetchData()}
+                        />
+                    }
                     data={this.state.data}
                     keyExtractor={(item) => item.id}
                     renderItem={({item}) => {
                         return (
-                            <TouchableOpacity style={styles.template}
-                                              onPress ={() => this.props.navigation.navigate('Template', {template: item})}
-                            >
-                                <Text style={styles.templateName}>{item.name}</Text>
-                                <Text style={styles.templateCreator}>{item.creator}</Text>
-                            </TouchableOpacity>
+                            <TemplateCell item={item}
+                                          onPress={() => this.props.navigation.navigate('Template', {template: item})}/>
                         );
                     }}
-                    ListHeaderComponent={this.renderHeader}
+                    ListHeaderComponent={this._renderHeader}
                 />
             </View>
         );
@@ -79,21 +84,7 @@ class Search extends React.Component {
 const styles = StyleSheet.create({
         container: {
             backgroundColor: '#EDEDED',
-            flex: 1,
-        },
-        template: {
-            flex: 1,
-            backgroundColor: 'white',
-            alignItems: 'flex-start',
-            marginHorizontal: 4,
-            marginVertical: 2,
-            padding: 5,
-        },
-        templateName: {
-            fontSize: 18,
-        },
-        templateCreator: {
-            fontSize: 12,
+            flex: 1
         }
     }
 );

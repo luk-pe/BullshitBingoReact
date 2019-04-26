@@ -4,7 +4,6 @@ import {
     StyleSheet,
     Text,
     View,
-    Image,
     TouchableOpacity, FlatList
 } from 'react-native';
 import AntIcon from "react-native-vector-icons/AntDesign";
@@ -12,9 +11,6 @@ import DialogInput from 'react-native-dialog-input';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as Actions from '../redux/actions';
-
-import * as firebase from 'firebase';
-import 'firebase/auth';
 
 class User extends Component {
     constructor(props) {
@@ -74,8 +70,6 @@ class User extends Component {
             <View style={styles.container}>
                 <View style={styles.header}>
                     <View style={styles.headerContent}>
-                        <Image style={styles.avatar}
-                               source={require('../../assets/user.png')}/>
                         <Text style={styles.name}>{user.displayName}</Text>
                         <Text style={styles.userInfo}>{user.email}</Text>
                         <View style={styles.actionBar}>
@@ -142,7 +136,7 @@ const styles = StyleSheet.create({
     },
     header: {
         backgroundColor: "#fff",
-        flex: 0.4
+        flex: 0.35
     },
     headerContent: {
         padding: 30,
@@ -152,14 +146,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginTop: 20
-    },
-    avatar: {
-        width: 75,
-        height: 75,
-        borderRadius: 63,
-        borderWidth: 4,
-        borderColor: "white",
-        marginBottom: 10,
     },
     name: {
         fontSize: 22,
@@ -173,7 +159,7 @@ const styles = StyleSheet.create({
     },
     body: {
         backgroundColor: '#EDEDED',
-        flex: 0.6
+        flex: 0.65
     },
     item: {
         flexDirection: 'row',

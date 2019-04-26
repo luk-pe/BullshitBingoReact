@@ -1,5 +1,5 @@
 import React from 'react';
-import {KeyboardAvoidingView,StyleSheet, TextInput, Text, View, Button, ScrollView, Alert} from 'react-native';
+import {KeyboardAvoidingView, StyleSheet, TextInput, Text, View, Button, ScrollView, Alert} from 'react-native';
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import * as Actions from "../redux/actions";
@@ -18,191 +18,91 @@ class NewTemplate extends React.Component {
         };
     }
 
-    render() {
-        return (
-            <KeyboardAvoidingView style={styles.container} behavior="padding" keyboardVerticalOffset={80} enabled>
-                <ScrollView>
-                <View style={styles.content}>
-                    <Text style={styles.text}>Templates</Text>
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={(text) => this.setState({name: text})}
-                        value={this.state.title}
-                        placeholder={'Templates'}
-                        placeholderTextColor={'#A9A9A9'}
-                    />
-                </View>
-                <View style={styles.content}>
-                    <Text style={styles.text}>Items</Text>
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={(text) => this.onChange(text,0)}
-                        value={this.state.item}
-                        placeholder={'Item 1'}
-                        placeholderTextColor={'#A9A9A9'}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={(text) => this.onChange(text,1)}
-                        value={this.state.item}
-                        placeholder={'Item 2'}
-                        placeholderTextColor={'#A9A9A9'}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={(text) => this.onChange(text,2)}
-                        value={this.state.item}
-                        placeholder={'Item 3'}
-                        placeholderTextColor={'#A9A9A9'}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={(text) => this.onChange(text,3)}
-                        value={this.state.item}
-                        placeholder={'Item 4'}
-                        placeholderTextColor={'#A9A9A9'}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={(text) => this.onChange(text,4)}
-                        value={this.state.item}
-                        placeholder={'Item 5'}
-                        placeholderTextColor={'#A9A9A9'}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={(text) => this.onChange(text,5)}
-                        value={this.state.item}
-                        placeholder={'Item 6'}
-                        placeholderTextColor={'#A9A9A9'}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={(text) => this.onChange(text,6)}
-                        value={this.state.item}
-                        placeholder={'Item 7'}
-                        placeholderTextColor={'#A9A9A9'}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={(text) => this.onChange(text,7)}
-                        value={this.state.item}
-                        placeholder={'Item 8'}
-                        placeholderTextColor={'#A9A9A9'}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={(text) => this.onChange(text,8)}
-                        value={this.state.item}
-                        placeholder={'Item 9'}
-                        placeholderTextColor={'#A9A9A9'}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={(text) => this.onChange(text,9)}
-                        value={this.state.item}
-                        placeholder={'Item 10'}
-                        placeholderTextColor={'#A9A9A9'}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={(text) => this.onChange(text,10)}
-                        value={this.state.item}
-                        placeholder={'Item 11'}
-                        placeholderTextColor={'#A9A9A9'}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={(text) => this.onChange(text,11)}
-                        value={this.state.item}
-                        placeholder={'Item 12'}
-                        placeholderTextColor={'#A9A9A9'}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={(text) => this.onChange(text,12)}
-                        value={this.state.item}
-                        placeholder={'Item 13'}
-                        placeholderTextColor={'#A9A9A9'}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={(text) => this.onChange(text,13)}
-                        value={this.state.item}
-                        placeholder={'Item 14'}
-                        placeholderTextColor={'#A9A9A9'}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={(text) => this.onChange(text,14)}
-                        value={this.state.item}
-                        placeholder={'Item 15'}
-                        placeholderTextColor={'#A9A9A9'}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={(text) => this.onChange(text,15)}
-                        value={this.state.item}
-                        placeholder={'Item 16'}
-                        placeholderTextColor={'#A9A9A9'}
-                    />
-                </View>
-                <View style={styles.content}>
-                    <Text style={styles.text}>Description</Text>
-                    <TextInput
-                        style={styles.input}
-                        multiline = {true}
-                        onChangeText={(text) => this.setState({description: text})}
-                        value={this.state.description}
-                        placeholder={'Description (optional)'}
-                        placeholderTextColor={'#A9A9A9'}
-                        />
-                    <Button
-                        title="Save Template"
-                        onPress={() => this.onSave()}
-                    />
-                </View>
-                </ScrollView>
-            </KeyboardAvoidingView>
-        );
-    }
-    onChange = (text, position) => {
+    _onChange = (text, position) => {
         let temp = this.state.items;
         temp[position] = text;
         this.setState({items: temp});
     };
-    onSave = () => {
+
+    _onSave = () => {
         let emptyFields = false;
-        if(this.state.name == null){
+        if (this.state.name == null) {
             emptyFields = true;
-        } else if (this.state.items.length < 16){
+        } else if (this.state.items.length < 16) {
             emptyFields = true;
         } else {
-            for (i = 0; i < 16; i++){
-                if(this.state.items[i] == null || this.state.items[i].trim() == ''){
+            for (i = 0; i < 16; i++) {
+                if (this.state.items[i] == null || this.state.items[i].trim() == '') {
                     emptyFields = true;
                 }
             }
         }
-        if (emptyFields){
+        if (emptyFields) {
             Alert.alert(
                 'Empty Fields',
-                'Please fill all the fields to save the template',
-                [
-                    {
-                        text: 'Cancel',
-                        onPress: () => console.log('Cancel Pressed'),
-                        style: 'cancel',
-                    },
-                    {text: 'OK', onPress: () => console.log('OK Pressed')},
-                ],
-                {cancelable: false},
+                'Please fill all the fields to save the template'
             );
         } else {
             this.props.addNewTemplate(this.state);
             this.props.navigation.navigate('Template', {template: this.state})
         }
     };
+
+    _renderTextInputs = () => {
+        let inputs = [];
+        for (let i = 0; i < 16; i++) {
+            inputs.push(
+                <TextInput
+                    key={i}
+                    style={styles.input}
+                    onChangeText={(text) => this._onChange(text, i)}
+                    value={this.state.item}
+                    placeholder={'Item ' + (i + 1)}
+                    placeholderTextColor={'#A9A9A9'}
+                />
+            );
+        }
+
+        return (inputs);
+    }
+
+    render() {
+        return (
+            <KeyboardAvoidingView style={styles.container} behavior="padding" keyboardVerticalOffset={80} enabled>
+                <ScrollView>
+                    <View style={styles.content}>
+                        <Text style={styles.text}>Templates</Text>
+                        <TextInput
+                            style={styles.input}
+                            onChangeText={(text) => this.setState({name: text})}
+                            value={this.state.title}
+                            placeholder={'Templates'}
+                            placeholderTextColor={'#A9A9A9'}
+                        />
+                    </View>
+                    <View style={styles.content}>
+                        <Text style={styles.text}>Items</Text>
+                        {this._renderTextInputs()}
+                    </View>
+                    <View style={styles.content}>
+                        <Text style={styles.text}>Description</Text>
+                        <TextInput
+                            style={styles.input}
+                            multiline={true}
+                            onChangeText={(text) => this.setState({description: text})}
+                            value={this.state.description}
+                            placeholder={'Description (optional)'}
+                            placeholderTextColor={'#A9A9A9'}
+                        />
+                        <Button
+                            title="Save Template"
+                            onPress={() => this._onSave()}
+                        />
+                    </View>
+                </ScrollView>
+            </KeyboardAvoidingView>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
@@ -229,6 +129,7 @@ const styles = StyleSheet.create({
         }
     }
 );
+
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         addNewTemplate: Actions.addNewTemplate
@@ -240,4 +141,5 @@ function mapStateToProps(state) {
         user: state.userReducer.user
     };
 }
+
 export default connect(mapStateToProps, mapDispatchToProps)(NewTemplate);

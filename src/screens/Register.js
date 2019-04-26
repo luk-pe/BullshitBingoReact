@@ -1,17 +1,12 @@
 import React from 'react';
 import {Dimensions,StyleSheet, View, Text, TextInput, TouchableOpacity} from "react-native";
-import * as firebase from 'firebase';
 import 'firebase/auth';
 
 // Redux import
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as Actions from '../redux/actions';
-import DialogInput from "react-native-dialog-input";
 
-// TODO
-// Documentation für Firebase Login
-// https://firebase.google.com/docs/auth/web/start?authuser=1
 
 class Login extends React.Component {
     constructor(props) {

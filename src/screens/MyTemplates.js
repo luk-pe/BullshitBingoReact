@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, FlatList, Button, TouchableOpacity} from 'react-native';
 import Game from './Game';
 import Template from './Template';
+import TemplateCell from "../components/TemplateCell";
 // Redux import
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -16,13 +17,7 @@ class MyTemplates extends React.Component {
                     keyExtractor={(item) => item.id}
                     renderItem={({item}) => {
                         return (
-                            <TouchableOpacity
-                                              style={styles.template}
-                                              onPress ={() => this.props.navigation.navigate('MyTemplate', {template: item})}
-                            >
-                                <Text style={styles.templateName}>{item.name}</Text>
-                                <Text style={styles.templateCreator}>{item.creator}</Text>
-                            </TouchableOpacity>
+                            <TemplateCell item={item} onPress ={() => this.props.navigation.navigate('MyTemplate', {template: item})}/>
                         );
                     }}
                 />
@@ -35,20 +30,6 @@ const styles = StyleSheet.create({
         container: {
             backgroundColor: '#EDEDED',
             flex: 1,
-        },
-        template: {
-            flex: 1,
-            backgroundColor: 'white',
-            alignItems: 'flex-start',
-            marginHorizontal: 4,
-            marginVertical: 2,
-            padding: 5,
-        },
-        templateName: {
-            fontSize: 18,
-        },
-        templateCreator: {
-            fontSize: 12,
         }
     }
 );

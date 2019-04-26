@@ -10,8 +10,8 @@ import MyTemplates from "./MyTemplates";
 import MyGames from "./MyGames";
 
 class MyContent extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             selectedIndex: 0,
         };

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dimensions,StyleSheet, View, Text, TextInput, TouchableOpacity} from "react-native";
+import {Dimensions, StyleSheet, View, Text, TextInput, TouchableOpacity} from "react-native";
 import Register from './Register.js';
 import * as firebase from 'firebase';
 import 'firebase/auth';
@@ -10,9 +10,6 @@ import {connect} from 'react-redux';
 import * as Actions from '../redux/actions';
 import DialogInput from "react-native-dialog-input";
 
-// TODO
-// Documentation für Firebase Login
-// https://firebase.google.com/docs/auth/web/start?authuser=1
 
 class Login extends React.Component {
     constructor(props) {
@@ -37,18 +34,18 @@ class Login extends React.Component {
 
     _tryLogin = () => {
         this.setState({isLoading: true});
-        const {mail,password} = this.state;
-        this.props.loginUser(mail,password).catch((error) => {
+        const {mail, password} = this.state;
+        this.props.loginUser(mail, password).catch((error) => {
             alert(error.message);
             this.setState({isLoading: false});
         });
     };
 
     _sendNewPassword = (emailAddress) => {
-        this.setState({isForgotPasswordAlertOpen:false});
-        firebase.auth().sendPasswordResetEmail(emailAddress).then(function() {
+        this.setState({isForgotPasswordAlertOpen: false});
+        firebase.auth().sendPasswordResetEmail(emailAddress).then(function () {
             alert("Please check your Inbox");
-        }).catch(function(error) {
+        }).catch(function (error) {
             alert("Error while sending new password");
         });
     };
@@ -60,13 +57,13 @@ class Login extends React.Component {
     render() {
 
         if (this.state.renderRegister) {
-            return(<Register goBack={this._renderLogin}/>);
+            return (<Register goBack={this._renderLogin}/>);
         }
 
         return (
             <View style={styles.container}>
                 <View style={styles.viewTop}>
-                    <Text style={{fontSize:40}}>LOGIN</Text>
+                    <Text style={{fontSize: 40}}>LOGIN</Text>
                     <TextInput style={styles.textInput}
                                autoCorrect={false}
                                underlineColorAndroid="transparent"
@@ -85,27 +82,29 @@ class Login extends React.Component {
                                selectionColor="white"
                                autoCapitalize="none"
                                autoCorrection="none"
-                               secureTextEntry = {true}
+                               secureTextEntry={true}
                                onChangeText={this._onChangePassword}
                     />
                     <TouchableOpacity
                         disabled={this.state.isLoading}
-                        onPress = {() => {this.setState({isForgotPasswordAlertOpen: true})}}>
-                        <Text style={{color:'blue'}}>Forgot password?</Text>
+                        onPress={() => {
+                            this.setState({isForgotPasswordAlertOpen: true})
+                        }}>
+                        <Text style={{color: 'blue'}}>Forgot password?</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.viewBottom}>
                     <TouchableOpacity
                         disabled={this.state.isLoading}
-                        style = {styles.loginButton}
-                        onPress = {() => this._tryLogin()}>
-                        <Text style = {styles.loginButtonText}>Login</Text>
+                        style={styles.loginButton}
+                        onPress={() => this._tryLogin()}>
+                        <Text style={styles.loginButtonText}>Login</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         disabled={this.state.isLoading}
-                        style = {styles.loginButton}
-                        onPress = {() => this.setState({renderRegister: true})}>
-                        <Text style = {styles.loginButtonText}>New? Register!</Text>
+                        style={styles.loginButton}
+                        onPress={() => this.setState({renderRegister: true})}>
+                        <Text style={styles.loginButtonText}>New? Register!</Text>
                     </TouchableOpacity>
                 </View>
                 <DialogInput isDialogVisible={this.state.isForgotPasswordAlertOpen}
@@ -130,14 +129,14 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
     },
     loginButton: {
-        borderRadius:20,
+        borderRadius: 20,
         margin: 15,
         padding: 15,
         height: 50,
         width: (Dimensions.get('window').width * 0.8),
         backgroundColor: '#000',
     },
-    loginButtonText:{
+    loginButtonText: {
         textAlign: 'center',
         fontSize: 16,
         color: 'white'
@@ -147,7 +146,7 @@ const styles = StyleSheet.create({
         padding: 15,
         height: 60,
         width: (Dimensions.get('window').width * 0.8),
-        borderRadius:20,
+        borderRadius: 20,
         fontSize: 16,
         textAlign: 'center',
         backgroundColor: 'blue',
