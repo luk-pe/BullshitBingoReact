@@ -3,8 +3,8 @@ import React from 'react';
 import {Provider} from 'react-redux';
 import {createStore, applyMiddleware,compose} from 'redux';
 import thunk from 'redux-thunk';
-import {persistStore,persistReducer} from 'redux-persist'
-import AsyncStorage from 'redux-persist/lib/storage' // defaults to localStorage for web and AsyncStorage for react-native
+import {persistStore,persistReducer} from 'redux-persist';
+import AsyncStorage from 'redux-persist/lib/storage';
 import {PersistGate} from 'redux-persist/integration/react';
 import reducers from './src/redux/reducers';
 import * as firebase from 'firebase';
@@ -17,12 +17,8 @@ const persistConfig = {
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
-const store = createStore(persistedReducer, {}, compose(applyMiddleware(thunk)));
+const store = createStore(persistedReducer, compose(applyMiddleware(thunk)));
 const persistor = persistStore(store);
-
-// TODO Für Debugging
-// Folgende Zeile auskommentieren um PersistStore zu löschen -> Gesamter Speicher wird geleert
-// persistor.purge();
 
 // Initialize Firebase
 var firebaseConfig = {

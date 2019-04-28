@@ -5,7 +5,7 @@ import templatesReducer from './templates.reducer';
 import userReducer from './user.reducer';
 
 export default combineReducers({
-    gamesReducer,
-    templatesReducer,
-    userReducer
+    gamesReducer: gamesReducer,
+    templatesReducer: templatesReducer,
+    userReducer: userReducer
 });

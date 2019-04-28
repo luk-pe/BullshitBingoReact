@@ -13,7 +13,7 @@ const templatesReducer = function (state = initialState, action) {
         case Actions.ADD_NEW_TEMPLATE: {
             return {
                 ...state,
-                templates: [...state.templates, action.payload]
+                templates: typeof state.templates === "undefined" ? [action.payload] : [...state.templates, action.payload]
             };
         }
         case Actions.UPLOAD_TEMPLATE: {
