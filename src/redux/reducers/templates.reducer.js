@@ -16,6 +16,12 @@ const templatesReducer = function (state = initialState, action) {
                 templates: typeof state.templates === "undefined" ? [action.payload] : [...state.templates, action.payload]
             };
         }
+        case Actions.EDIT_TEMPLATE: {
+            return {
+                ...state,
+                templates: state.templates.map(t => t.id === action.payload.id ? action.payload : t)
+            };
+        }
         case Actions.UPLOAD_TEMPLATE: {
             return {
                 ...state,

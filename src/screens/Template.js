@@ -124,6 +124,7 @@ class Template extends React.Component {
                                  initValueTextInput={template.description}
                                  submitInput={(inputText) => {
                                      template.description = inputText;
+                                     this.props.editTemplate(template);
                                      this.setState({isDialogVisible: false})
                                  }}
 
@@ -185,6 +186,7 @@ const styles = StyleSheet.create({
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         addGame: Actions.addGame,
+        editTemplate: Actions.editTemplate,
         uploadTemplate: Actions.uploadTemplate
     }, dispatch);
 }

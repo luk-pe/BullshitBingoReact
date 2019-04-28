@@ -1,7 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList, Button, TouchableOpacity} from 'react-native';
-import Game from './Game';
-import Template from './Template';
+import { StyleSheet, View, FlatList} from 'react-native';
 import TemplateCell from "../components/TemplateCell";
 // Redux import
 import {bindActionCreators} from 'redux';

@@ -5,11 +5,19 @@ import 'firebase/firestore';
 export const GET_ALL_REMOTE_TEMPLATES = 'GET_ALL_REMOTE_TEMPLATES';
 export const UPLOAD_TEMPLATE = 'UPLOAD_TEMPLATE';
 export const ADD_NEW_TEMPLATE = 'ADD_NEW_TEMPLATE';
+export const EDIT_TEMPLATE = 'EDIT_TEMPLATE';
 
 export function addNewTemplate(template) {
 
     return {
         type: ADD_NEW_TEMPLATE,
+        payload: template
+    }
+}
+
+export function editTemplate(template) {
+    return {
+        type: EDIT_TEMPLATE,
         payload: template
     }
 }
