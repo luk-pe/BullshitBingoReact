@@ -19,6 +19,10 @@ class Template extends React.Component {
         };
     }
 
+    componentDidMount() {
+        this.props.navigation.setParams({ title: this.props.navigation.state.params.template.name })
+    }
+
     _shuffle = (a) => {
         for (let i = a.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));

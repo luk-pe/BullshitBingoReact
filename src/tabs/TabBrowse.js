@@ -1,5 +1,5 @@
 import React from 'react';
-import {createStackNavigator} from 'react-navigation';
+import {createStackNavigator, HeaderBackButton} from 'react-navigation';
 
 import Browse from '../screens/Browse';
 import Template from '../screens/Template';
@@ -15,7 +15,9 @@ const TabBrowse = createStackNavigator({
     },
     Template: {
         screen: Template,
-        navigationOptions: navOpts(navOpts, "Template"),
+        navigationOptions: ({navigation}) => ({
+            title: navigation.state.params.title || 'Template',
+        })
     }
 });
 

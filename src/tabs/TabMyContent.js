@@ -43,7 +43,7 @@ const TabMyContent = createStackNavigator({
     MyTemplate: {
         screen: Template,
         navigationOptions: ({navigation}) => ({
-            title: "Template",
+            title: navigation.state.params.title || 'Template',
             headerLeft:  <HeaderBackButton
                 onPress={() => navigation.navigate('MyContent')}
             />
@@ -51,7 +51,9 @@ const TabMyContent = createStackNavigator({
     },
     Game: {
         screen: Game,
-        navigationOptions: navOpts(navOpts, "Game"),
+        navigationOptions: ({navigation}) => ({
+            title: navigation.state.params.title || 'Game',
+        })
     },
 });
 

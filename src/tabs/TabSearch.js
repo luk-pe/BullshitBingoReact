@@ -15,7 +15,9 @@ const TabSearch = createStackNavigator({
     },
     SearchTemplate: {
         screen: Template,
-        navigationOptions: navOpts(navOpts, "Template"),
+        navigationOptions: ({navigation}) => ({
+            title: navigation.state.params.title || 'Template',
+        })
     },
 });
 

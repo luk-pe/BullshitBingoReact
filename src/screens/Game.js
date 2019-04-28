@@ -17,6 +17,7 @@ class Game extends React.Component {
     componentDidMount() {
         const game = this.props.navigation.state.params.game;
         this.setState({game: game});
+        this.props.navigation.setParams({ title: game.name })
     }
 
     _callBingo = () => {
